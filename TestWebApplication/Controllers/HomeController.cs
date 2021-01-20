@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TestWebApplication.Models;
+using TestWebApplication.Services;
 
 namespace TestWebApplication.Controllers
 {
@@ -18,9 +19,11 @@ namespace TestWebApplication.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            VejrAPI vejrAPI = new VejrAPI();
+            var data = await vejrAPI.GetVejr();
+            return View(data);
         }
 
         public IActionResult Privacy()

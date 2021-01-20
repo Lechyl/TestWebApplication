@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TestWebApplication.Data
+namespace TestWebApplication.Models
 {
-    public class User
+    public class UserLoginModel
     {
-        public int UserID { get; set; }
-        [Required]
-        public string Name { get; set; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }
@@ -20,5 +16,7 @@ namespace TestWebApplication.Data
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [Display(Name ="Remember me")]
+        public bool RememberMe { get; set; }
     }
 }

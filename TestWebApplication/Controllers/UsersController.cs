@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TestWebApplication.Data;
+using TestWebApplication.Models;
 
 namespace TestWebApplication.Controllers
 {
@@ -53,7 +54,7 @@ namespace TestWebApplication.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserID,Name")] User user)
+        public async Task<IActionResult> Create([Bind("UserID,Name,Email,Password")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +86,7 @@ namespace TestWebApplication.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserID,Name")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("UserID,Name,Email,Password")] User user)
         {
             if (id != user.UserID)
             {
@@ -147,6 +148,29 @@ namespace TestWebApplication.Controllers
         private bool UserExists(int id)
         {
             return _context.users.Any(e => e.UserID == id);
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(UserLoginModel userLogin)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(userLogin);
+            }
+
+            bool userExist = _context.users.Any(a => a.Email == userLogin.Email && a.Password == userLogin.Password);
+            if (!userExist)
+            {
+                return NotFound();
+            }
+            return View();
         }
     }
 }

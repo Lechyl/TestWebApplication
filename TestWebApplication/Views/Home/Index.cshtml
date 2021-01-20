@@ -2,8 +2,16 @@
     ViewData["Title"] = "Home Page";
     
 }
+@model TestWebApplication.Models.VejrModel
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div>
+        <p>Location :@Html.DisplayNameFor(model => model.LocationName)</p>
+        <p>Temp: @Html.DisplayNameFor(model => model.CurrentData.Temperature)</p>
+        <p>Humidity: @Html.DisplayNameFor(model => model.CurrentData.Humidity)</p>
+
+    </div>
 </div>

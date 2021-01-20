@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TestWebApplication.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace TestWebApplication
 {
@@ -28,7 +30,9 @@ namespace TestWebApplication
             services.AddControllersWithViews();
 
             //Dependency injection
-            services.AddDbContext<HelloWorldContext>(options => options.UseMySql(Configuration.GetConnectionString("HelloWorldContext")));  
+            services.AddDbContext<HelloWorldContext>(options => options.UseMySql(Configuration.GetConnectionString("HelloWorldContext")));
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +53,7 @@ namespace TestWebApplication
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
